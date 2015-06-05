@@ -18,14 +18,15 @@ class Enigma
     letters + numbers + others
   end
 
+  def self.offsets_for(date)
+    (date.to_i ** 2).to_s[-4..-1].chars.map(&:to_i)
+  end
 
-
-  def initialize(message, key, date, map=Enigma.default_character_map)
+  def initialize(message, key, offsets, map=Enigma.default_character_map)
     @map       = map
     @message   = message
     @key       = key
-    @date      = date
-    @offsets   = (@date.to_i ** 2).to_s[-4..-1].chars.map(&:to_i)
+    @offsets   = offsets
     @rotations = @key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
   end
 

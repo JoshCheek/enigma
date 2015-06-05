@@ -4,7 +4,8 @@ class TestEncryptingAMessage < Minitest::Test
     encrypted = 'fmotmfzwptg'
     date      = '040615'
     key       = "68403"
-    enigma    = Enigma.new message, key, date
+    offsets   = Enigma.offsets_for(date)
+    enigma    = Enigma.new message, key, offsets
     assert_equal encrypted, enigma.encrypt
   end
 end
