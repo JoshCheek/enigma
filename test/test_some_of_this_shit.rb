@@ -16,8 +16,11 @@ class TestSomeOfThisShit < Minitest::Test
                   ["1234", "5678", "9012", "3456", "789"]
   end
 
-
-  def test_offsets_for_a_date_groups_every_two_consecutive_digits_of_its_square__into_a_number
+  def test_the_fucking_offsets
     assert_equal [8, 2, 2, 5], Enigma.offsets_for("040615")
+  end
+
+  def test_the_fucking_rotations
+    assert_equal [68, 84, 40, 3], Enigma.rotations_for( "68403")
   end
 end
