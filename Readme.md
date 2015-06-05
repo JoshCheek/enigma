@@ -27,6 +27,19 @@ fmotmfzwptg
 ```
 
 
+### Decryption
+
+```
+$ cat encrypted.txt
+fmotmfzwptg
+
+$ ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 68403 040615
+Created 'decrypted.txt' with the key 68403 and date 040615
+
+$ cat decrypted.txt
+hello world
+```
+
 Notes
 -----
 
