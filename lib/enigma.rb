@@ -34,11 +34,15 @@ class Enigma
 
   # Note to self: chunk rotate?
   def encrypt
-    chunkify(@message).map { |chunk| encrypt_chunk chunk }.join
+    chunk_rotate :forward
   end
 
   def decrypt
-    chunkify(@message).map { |chunk| decrypt_chunk chunk }.join
+    chunk_rotate :backward
+  end
+
+  def chunk_rotate(direction)
+    chunkify(@message).map { |chunk| rotate_chunk chunk, direction }.join
   end
 
   private
@@ -47,23 +51,18 @@ class Enigma
     message.chars.each_slice(4)
   end
 
-  def encrypt_chunk(chunk)
+  def rotate_chunk(chunk, direction)
     chunk.map.with_index do |char, index|
-      encrypt_char char, @offsets[index]
+      rotate_char char, @offsets[index], direction
     end
-  end
-  def encrypt_char(character, offset)
-    rotation = @map.index(character) + offset
-    @map.rotate(rotation).first
   end
 
-  def decrypt_chunk(chunk)
-    chunk.map.with_index do |char, index|
-      decrypt_char char, @offsets[index]
+  def rotate_char(character, offset, direction)
+    if direction == :forward
+      rotation = @map.index(character) + offset
+    else
+      rotation = @map.index(character) - offset
     end
-  end
-  def decrypt_char(character, offset)
-    rotation = @map.index(character) - offset
     @map.rotate(rotation).first
   end
 end
