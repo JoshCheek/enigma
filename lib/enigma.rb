@@ -32,8 +32,13 @@ class Enigma
     @offsets = offsetss.transpose.map { |n| n.inject 0, :+ }
   end
 
+  # Note to self: chunk rotate?
   def encrypt
     chunkify(@message).map { |chunk| encrypt_chunk chunk }.join
+  end
+
+  def decrypt
+    chunkify(@message).map { |chunk| decrypt_chunk chunk }.join
   end
 
   private
@@ -47,9 +52,18 @@ class Enigma
       encrypt_char char, @offsets[index]
     end
   end
-
   def encrypt_char(character, offset)
     rotation = @map.index(character) + offset
+    @map.rotate(rotation).first
+  end
+
+  def decrypt_chunk(chunk)
+    chunk.map.with_index do |char, index|
+      decrypt_char char, @offsets[index]
+    end
+  end
+  def decrypt_char(character, offset)
+    rotation = @map.index(character) - offset
     @map.rotate(rotation).first
   end
 end
