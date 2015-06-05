@@ -1,11 +1,14 @@
 class TestEncryptingAMessage < Minitest::Test
+  def assert_chunks(chunks, message)
+    assert_equal chunks, Enigma.chunk(message)
+  end
+
   def test_a_message_is_a_group_of_chunks_which_are_every_group_of_four_or_fewer_characters
-    skip
-    assert_chunks "a",            ["a"]
-    assert_chunks "abcd",         ["abcd"]
-    assert_chunks "abcde",        ["abcd", "e"]
-    assert_chunks "abcdefghijkl", ["abcd", "efgh", "ijkl"]
-    assert_chunks "hello world",  ["fmot", "mfzw", "ptg"]
+    assert_chunks ["a"]                    ,  "a"
+    assert_chunks ["abcd"]                 ,  "abcd"
+    assert_chunks ["abcd", "e"]            ,  "abcde"
+    assert_chunks ["abcd", "efgh", "ijkl"] ,  "abcdefghijkl"
+    assert_chunks ["hell", "o wo", "rld"]  ,  "hello world"
   end
 
   def test_to_encrypt_a_message_we_encrypt_its_chunks_and_join_them_together
