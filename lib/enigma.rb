@@ -26,11 +26,10 @@ class Enigma
     key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
   end
 
-  def initialize(message, rotations, offsets, map)
-    @map       = map
-    @message   = message
-    @offsets   = offsets
-    @rotations = rotations
+  def initialize(message, *offsetss, map)
+    @map     = map
+    @message = message
+    @offsets = offsetss.transpose.map { |n| n.inject 0, :+ }
   end
 
   def encrypt
@@ -39,23 +38,18 @@ class Enigma
 
   private
 
-  attr_reader :map, :offsets
-
   def chunkify(message)
     message.chars.each_slice(4)
   end
 
   def encrypt_chunk(chunk)
     chunk.map.with_index do |char, index|
-      rotation  = @rotations[index]
-      encrypt_char char, rotation, offsets[index]
+      encrypt_char char, @offsets[index]
     end
   end
 
-  def encrypt_char(character, rotation, offset)
-    unencrypted_index = map.index character
-    encrypted_sum     = unencrypted_index + rotation + offset
-    encrypted_index   = encrypted_sum % map.length
-    map[encrypted_index]
+  def encrypt_char(character, offset)
+    rotation = @map.index(character) + offset
+    @map.rotate(rotation).first
   end
 end
