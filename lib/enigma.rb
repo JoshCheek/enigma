@@ -25,6 +25,31 @@ class Enigma
   end
 
   def encrypt
-    "fmotmfzwptg"
+    # turn my message into chunks
+    chunks = @unencrypted_message.chars.each_slice(4).to_a
+
+    # encrypt each chunk
+    encrypted_chunks = chunks.map { |chunk| encrypt_chunk chunk }
+
+    # join my chunks
+    encrypted_chunks.join
+  end
+
+  private
+
+  def encrypt_chunk(chunk)
+    date_square = (@date.to_i ** 2).to_s
+    offsets     = date_square[-4..-1]
+
+    chunk.map.with_index { |char, i|
+      encrypt_char char, @key[i..i+1].to_i, offsets[i].to_i
+    }
+  end
+
+  def encrypt_char(character, rotation, offset)
+    unencrypted_index = Enigma.default_character_map.index character
+    encrypted_sum     = unencrypted_index + rotation + offset
+    encrypted_index   = encrypted_sum % Enigma.default_character_map.length
+    Enigma.default_character_map[encrypted_index]
   end
 end
