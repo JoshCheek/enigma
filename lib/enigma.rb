@@ -22,12 +22,15 @@ class Enigma
     (date.to_i ** 2).to_s[-4..-1].chars.map(&:to_i)
   end
 
-  def initialize(message, key, offsets, map=Enigma.default_character_map)
+  def self.rotations_for(key)
+    key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
+  end
+
+  def initialize(message, rotations, offsets, map=Enigma.default_character_map)
     @map       = map
     @message   = message
-    @key       = key
     @offsets   = offsets
-    @rotations = @key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
+    @rotations = rotations
   end
 
   def encrypt
