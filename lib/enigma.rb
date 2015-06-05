@@ -11,6 +11,13 @@ class Enigma
     message.chars.each_slice(4).map(&:join).to_a
   end
 
+  def self.default_character_map
+    letters  = ('a'..'z').to_a
+    numbers  = ('0'..'9').to_a
+    others   = [' ', '.', ',']
+    letters + numbers + others
+  end
+
   def initialize(unencrypted_message, key, date)
     @unencrypted_message = unencrypted_message
     @key                 = key
