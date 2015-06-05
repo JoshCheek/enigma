@@ -32,37 +32,32 @@ class Enigma
     @offsets = offsetss.transpose.map { |n| n.inject 0, :+ }
   end
 
-  # Note to self: chunk rotate?
   def encrypt
-    chunk_rotate :forward
+    chunk_rotate &:+
   end
 
   def decrypt
-    chunk_rotate :backward
-  end
-
-  def chunk_rotate(direction)
-    chunkify(@message).map { |chunk| rotate_chunk chunk, direction }.join
+    chunk_rotate &:-
   end
 
   private
+
+  def chunk_rotate(&rotator)
+    chunkify(@message).map { |chunk| rotate_chunk chunk, &rotator }.join
+  end
 
   def chunkify(message)
     message.chars.each_slice(4)
   end
 
-  def rotate_chunk(chunk, direction)
+  def rotate_chunk(chunk, &rotator)
     chunk.map.with_index do |char, index|
-      rotate_char char, @offsets[index], direction
+      rotate_char char, @offsets[index], &rotator
     end
   end
 
-  def rotate_char(character, offset, direction)
-    if direction == :forward
-      rotation = @map.index(character) + offset
-    else
-      rotation = @map.index(character) - offset
-    end
+  def rotate_char(character, offset, &rotator)
+    rotation = rotator.call(@map.index(character), offset)
     @map.rotate(rotation).first
   end
 end
