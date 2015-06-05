@@ -26,7 +26,7 @@ class Enigma
     key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
   end
 
-  def initialize(message, rotations, offsets, map=Enigma.default_character_map)
+  def initialize(message, rotations, offsets, map)
     @map       = map
     @message   = message
     @offsets   = offsets

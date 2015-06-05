@@ -7,10 +7,12 @@ input_filename      = ARGV[0]
 unencrypted_message = File.read input_filename
 
 # magic encryptiony shit
-key     = Enigma.random_key
-date    = Date.today.strftime("%d%m%y") # "040615" # today's date, apparently
-offsets = Enigma.offsets_for date
-enigma  = Enigma.new unencrypted_message, key, offsets
+key       = Enigma.random_key
+date      = Date.today.strftime("%d%m%y") # "040615" # today's date, apparently
+rotations = Enigma.rotations_for key
+offsets   = Enigma.offsets_for date
+map       = Enigma.default_character_map
+enigma    = Enigma.new unencrypted_message, rotations, offsets, map
 
 # write the output file
 output_filename = ARGV[1]

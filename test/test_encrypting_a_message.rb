@@ -6,7 +6,8 @@ class TestEncryptingAMessage < Minitest::Test
     key       = "68403"
     offsets   = Enigma.offsets_for(date)
     rotations = Enigma.rotations_for(key)
-    enigma    = Enigma.new message, rotations, offsets
+    map       = Enigma.default_character_map
+    enigma    = Enigma.new message, rotations, offsets, map
     assert_equal encrypted, enigma.encrypt
   end
 end
