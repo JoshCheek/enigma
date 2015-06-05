@@ -40,6 +40,9 @@ class TestEncryptingAMessage < Minitest::Test
 
   def test_to_encrypt_a_character_get_its_character_at_its_encrypted_index_which_is_the_unencrypted_index_plus_the_rotation_plus_the_offset
     skip
+    key  = 68403
+    date = 040615
+    chunk_encrypts_to key, date, "r",   "p"
   end
   # to encrypt a character:
   #   take each letter, (eg "h")
@@ -79,14 +82,4 @@ class TestEncryptingAMessage < Minitest::Test
   #     rotation: 40 (first two digits of the key)
   #   the d rotation is the fourth two digits from the key
   #     rotation: '03'.to_i (first two digits of the key)
-
-  # character map:
-  #   the lowercase letters then the numbers then a space, period, and comma
-  #   letters = ('a'..'z').to_a             # => ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-  #   numbers = ('0'..'9').to_a             # => ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-  #   others  = [' ', '.', ',']             # => [" ", ".", ","]
-  #   all     = letters + numbers + others  # => ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
-
-  #   all        # => ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
-  #     .length  # => 39
 end
