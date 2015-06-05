@@ -26,6 +26,31 @@ class Enigma
     key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
   end
 
+  def self.crack(encrypted, map)
+    *, second_to_last, last = chunkify(encrypted)
+    encrypted_chunk, known_chunk =
+      case last.length % 4
+      when 0 then [last,           ['n', 'd', '.', '.']]
+      when 1 then [second_to_last, ['e', 'n', 'd', '.']]
+      when 2 then [second_to_last, ['.', 'e', 'n', 'd']]
+      when 3 then [second_to_last, ['.', '.', 'e', 'n']]
+      end
+
+    offsets = known_chunk.zip(encrypted_chunk).map do |known_val, enc_val|
+      find_offset map, known_val, enc_val
+    end
+
+    Enigma.new(encrypted, offsets, map).decrypt
+  end
+
+  def self.find_offset(map, first, second)
+    map.index(second) - map.index(first)
+  end
+
+  def self.chunkify(message)
+    message.chars.each_slice(4).to_a
+  end
+
   def initialize(message, *offsetss, map)
     @map     = map
     @message = message
@@ -43,11 +68,7 @@ class Enigma
   private
 
   def chunk_rotate(&rotator)
-    chunkify(@message).map { |chunk| rotate_chunk chunk, &rotator }.join
-  end
-
-  def chunkify(message)
-    message.chars.each_slice(4)
+    Enigma.chunkify(@message).map { |chunk| rotate_chunk chunk, &rotator }.join
   end
 
   def rotate_chunk(chunk, &rotator)
