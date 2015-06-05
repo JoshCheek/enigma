@@ -40,6 +40,31 @@ $ cat decrypted.txt
 hello world
 ```
 
+
+### Crack
+
+Turns out we don't need the date, there's only 39 possibilities for each of the characters.
+And we know which one it is! (just the difference between the encrypted
+value and the known value (known via `..end..`))
+So figure out what the known value is and calculate it.
+Then, decrypt based on that.
+
+```
+$ echo -n 'hello worldslkdj jjjjjj..end..' > message.txt
+
+$ ruby lib/encrypt.rb message.txt encrypted.txt
+Created "encrypted.txt" with the key 31937 and date 050615
+
+$ cat encrypted.txt
+hz2oosarr6uvl5um 40mj40b.z4g.t⏎                                                                                                                                                  05:48 AM   ~/deleteme/josh-enigma   master
+
+$ ruby lib/crack.rb encrypted.txt cracked.txt
+
+$ cat cracked.txt
+hello worldslkdj jjjjjj..end..⏎                                                                                                                                                  05:48 AM   ~/deleteme/josh-enigma   master
+```
+
+
 Notes
 -----
 
