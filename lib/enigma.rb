@@ -8,22 +8,19 @@ class Enigma
   end
 
   def self.chunk(message)
-    message.chars.each_slice(4).map(&:join).to_a
+    message.chars.each_slice(4).map(&:join)
   end
 
   def self.default_character_map
-    letters  = ('a'..'z').to_a
-    numbers  = ('0'..'9').to_a
-    others   = [' ', '.', ',']
-    letters + numbers + others
+    [*'a'..'z', *'0'..'9', ' ', '.', ',']
   end
 
   def self.offsets_for(date)
-    (date.to_i ** 2).to_s[-4..-1].chars.map(&:to_i)
+    (date.to_i ** 2).to_s.chars.last(4).map(&:to_i)
   end
 
   def self.rotations_for(key)
-    key.chars.each_cons(2).to_a.map(&:join).map(&:to_i)
+    key.chars.each_cons(2).map(&:join).map(&:to_i)
   end
 
   def self.crack(encrypted, map)
@@ -37,14 +34,10 @@ class Enigma
       end
 
     offsets = known_chunk.zip(encrypted_chunk).map do |known_val, enc_val|
-      find_offset map, known_val, enc_val
+      map.index(enc_val) - map.index(known_val)
     end
 
     Enigma.new(encrypted, offsets, map).decrypt
-  end
-
-  def self.find_offset(map, first, second)
-    map.index(second) - map.index(first)
   end
 
   def self.chunkify(message)
