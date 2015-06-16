@@ -4,8 +4,7 @@
 Videos of the implementation:
 -----------------------------
 
-[Watch them all!](https://vimeo.com/channels/joshenigma).
-
+* [All videos](https://vimeo.com/channels/joshenigma), as a playlist
 * [High level](https://vimeo.com/130885075) (BDD / TDD / starting from the outside)
 * [Random key generation](https://vimeo.com/130885076) (TDD)
 * [Figuring out the algorithm](https://vimeo.com/130885077) (also shows how I use SiB)
