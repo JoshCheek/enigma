@@ -1,5 +1,19 @@
-Enigma
-======
+[Enigma](http://tutorials.jumpstartlab.com/projects/enigma.html)
+================================================================
+
+Videos of the implementation:
+-----------------------------
+
+[Watch them all!](https://vimeo.com/channels/joshenigma).
+
+* [High level](https://vimeo.com/130885075) (BDD / TDD / starting from the outside)
+* [Random key generation](https://vimeo.com/130885076) (TDD)
+* [Figuring out the algorithm](https://vimeo.com/130885077) (also shows how I use SiB)
+* [Implementing Encrypt](https://vimeo.com/130885074)
+* [Refactoring](https://vimeo.com/130882701) ([before](http://bit.ly/1L1A1xY) and [after](http://bit.ly/1KJk5m1))
+* [Decrypting](https://vimeo.com/130882444)
+* Cracking (video not yet edited)
+
 
 BDD - Why we're here
 --------------------
