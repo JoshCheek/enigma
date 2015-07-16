@@ -11,7 +11,7 @@ Videos of the implementation:
 * [Implementing Encrypt](https://vimeo.com/130885074)
 * [Refactoring](https://vimeo.com/130882701) ([before](http://bit.ly/1L1A1xY) and [after](http://bit.ly/1KJk5m1))
 * [Decrypting](https://vimeo.com/130882444)
-* Cracking (video not yet edited)
+* [Cracking](https://vimeo.com/133626457)
 
 
 BDD - Why we're here
